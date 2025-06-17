@@ -1,0 +1,28 @@
+#playground {
+  width: 520px;
+  height: 520px;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
+#player_red, #player_blue {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  transition: left 0.1s, top 0.1s;
+}
+
+#player_red {
+  background: red;
+  left: 0;
+  top: 0;
+}
+
+#player_blue {
+  background: blue;
+  left: 496px; /* Position de départ opposée */
+  top: 496px;
+}
+
