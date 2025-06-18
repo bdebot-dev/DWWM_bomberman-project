@@ -1,0 +1,16 @@
+/* Restart Button */
+#restart_btn {
+  margin-top: 15px;
+  padding: 8px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  background: #28a745;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#restart_btn:hover {
+  background: #218838;
+}
