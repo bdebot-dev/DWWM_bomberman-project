@@ -55,3 +55,41 @@
   0% { transform: scale(0); opacity: 1; }
   100% { transform: scale(2); opacity: 0; }
 }
+
+#hud {
+  margin: 10px 0;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  width: 480px;
+}
+#gameover {
+  font-size: 28px;
+  color: #fff;
+  background: #222;
+  padding: 20px;
+  border-radius: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  min-width: 200px;
+}
+
+#restart_btn {
+  margin-top: 15px;
+  padding: 8px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  background: #28a745;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#restart_btn:hover {
+  background: #218838;
+}

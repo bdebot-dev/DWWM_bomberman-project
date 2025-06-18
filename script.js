@@ -1,7 +1,13 @@
 const playground = document.getElementById('playground');
 const playerRed = document.getElementById('player_red');
 const playerBlue = document.getElementById('player_blue');
+const livesRedSpan = document.getElementById('lives_red');
+const livesBlueSpan = document.getElementById('lives_blue');
+const gameoverDiv = document.getElementById('gameover');
 const step = 24;
+let livesRed = 3;
+let livesBlue = 3;
+let gameOver = false;
 
 // Bombes
 let bombRed = null;
@@ -22,6 +28,9 @@ let posBlue = { x: getMaxX(), y: getMaxY() };
 // Contrôles
 const arrows = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' ']; // Espace pour bombe rouge
 const zqsd = ['z', 'q', 's', 'd', 'a']; // 'a' pour bombe bleue
+
+updateLives();
+
 
 // Gestion des bombes
 function placeBomb(player, color) {
@@ -53,10 +62,9 @@ function isBombAt(x, y) {
   return false;
 }
 
-
-
 // Écouteur d'événements
 document.addEventListener('keydown', function(event) {
+  if (gameOver) return;
   // Bombe rouge (Espace)
   if (event.key === ' ') {
     event.preventDefault();
@@ -190,3 +198,86 @@ function checkPlayerHit(x, y) {
     }, 100);
   }
 }
+
+
+
+function updateLives() {
+  livesRedSpan.textContent = `Red: ${livesRed}`;
+  livesBlueSpan.textContent = `Blue: ${livesBlue}`;
+}
+
+function checkPlayerHit(x, y) {
+  // Si la partie est terminée, on ne fait rien
+  if (gameOver) return;
+
+  // Joueur rouge touché
+  if (posRed.x === x && posRed.y === y) {
+    livesRed--;
+    updateLives();
+    playerRed.style.backgroundColor = 'black';
+    setTimeout(() => {
+      playerRed.style.backgroundColor = 'red';
+      posRed.x = 0;
+      posRed.y = 0;
+      playerRed.style.left = '0px';
+      playerRed.style.top = '0px';
+    }, 100);
+    if (livesRed <= 0) endGame('Red');
+  }
+
+  // Joueur bleu touché
+  if (posBlue.x === x && posBlue.y === y) {
+    livesBlue--;
+    updateLives();
+    playerBlue.style.backgroundColor = 'black';
+    setTimeout(() => {
+      playerBlue.style.backgroundColor = 'blue';
+      posBlue.x = getMaxX();
+      posBlue.y = getMaxY();
+      playerBlue.style.left = `${posBlue.x}px`;
+      playerBlue.style.top = `${posBlue.y}px`;
+    }, 100);
+    if (livesBlue <= 0) endGame('Blue');
+  }
+}
+
+function endGame(loser) {
+  gameOver = true;
+  gameoverDiv.style.display = 'block';
+  document.getElementById('gameover_message').textContent = `${loser} lost the game!`;
+}
+
+const restartBtn = document.getElementById('restart_btn');
+
+restartBtn.addEventListener('click', function() {
+  // Réinitialise les vies
+  livesRed = 3;
+  livesBlue = 3;
+  updateLives();
+
+  // Réinitialise les positions
+  posRed = { x: 0, y: 0 };
+  posBlue = { x: getMaxX(), y: getMaxY() };
+  playerRed.style.left = posRed.x + 'px';
+  playerRed.style.top = posRed.y + 'px';
+  playerBlue.style.left = posBlue.x + 'px';
+  playerBlue.style.top = posBlue.y + 'px';
+
+  // Réinitialise les couleurs
+  playerRed.style.backgroundColor = 'red';
+  playerBlue.style.backgroundColor = 'blue';
+
+  // Supprime les bombes restantes
+  if (bombRed) { bombRed.remove(); bombRed = null; }
+  if (bombBlue) { bombBlue.remove(); bombBlue = null; }
+
+  // Supprime les explosions restantes
+  document.querySelectorAll('.explosion').forEach(e => e.remove());
+
+  // Cache le message de fin
+  gameoverDiv.style.display = 'none';
+
+  // Réactive le jeu
+  gameOver = false;
+});
+
