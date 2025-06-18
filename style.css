@@ -118,3 +118,32 @@
   background: #8B4513;
   border: 2px solid #654321;
 }
+
+/* === Controls Box === */
+#controls {
+  display: flex;
+  gap: 32px;
+  margin: 16px 0 0 0;
+  font-size: 16px;
+  justify-content: center;
+}
+
+.controls-box {
+  background: #f8f8f8;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 16px 24px;
+  min-width: 180px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.controls-box h3 {
+  margin-top: 0;
+  color: #c00;
+  font-size: 20px;
+  text-align: center;
+}
+
+.controls-box:nth-child(2) h3 {
+  color: #06c;
+}
