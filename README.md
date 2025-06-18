@@ -14,39 +14,3 @@ The game is designed as a foundation for further development, such as adding bom
 
 > Feel free to fork the project and add your own Bomberman-inspired features!
 
-## Two players game
-
-```js
-if (zqsd.includes(event.key.toLowerCase())) {
-    // code
-}
-```
-
-> This line makes the blue player's controls case-insensitive and simply checks if the pressed key is one of the movement keys defined in the `zqsd` array.
-
-### Breakdown
-
-- **`event.key`**: corresponds to the key pressed by the user (for example, "Z", "q", "S", "d", etc.).
-- **`.toLowerCase()`**: converts this key to lowercase, so "Z" becomes "z", "Q" becomes "q", etc. This allows the comparison to ignore the case (uppercase/lowercase).
-- **`zqsd`**: is an array containing the letters ['z', 'q', 's', 'd'], which are the keys used to control the blue player.
-- **`.includes()`**: checks if the value passed as a parameter exists in the array (in this case, it checks if the pressed key—in lowercase—is one of the blue player's control keys).
-
----
-
-### What the condition does
-
-The condition:
-```js
-if (zqsd.includes(event.key.toLowerCase())) {
-    // code
-}
-```
-- **Tests if the pressed key (in lowercase) is one of the blue player's control keys (Z, Q, S, D, regardless of case).**
-- If so, the code inside the if statement will execute (the blue player will move).
-
----
-
-### Example
-
-- If the user presses "Z", "z", "Q", "q", "S", "s", "D", or "d", the condition will be true.
-- If the user presses any other key (e.g., "a", "e", "ArrowLeft", etc.), the condition will be false.
