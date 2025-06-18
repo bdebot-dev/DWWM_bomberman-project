@@ -1,0 +1,15 @@
+/* Bonus: Multi-bomb Powerup */
+.bonus {
+  width: 20px;
+  height: 20px;
+  background: gold;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  position: absolute;
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
