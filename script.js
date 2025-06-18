@@ -32,8 +32,8 @@ function generateObstacles() {
   
   // Zones de sécurité (7x7 cases autour de chaque joueur)
   const safeZones = [
-    { x: 0, y: 0, radius: 3 }, // Joueur rouge
-    { x: 19, y: 19, radius: 3 } // Joueur bleu
+    { x: 0, y: 0, radius: 1.5 }, // Joueur rouge
+    { x: 19, y: 19, radius: 1.5 } // Joueur bleu
   ];
 
   // Génération de toutes les cellules sauf zones sûres
@@ -54,10 +54,10 @@ function generateObstacles() {
     [cells[i], cells[j]] = [cells[j], cells[i]];
   }
 
-  // Calcul des quantités (20% + 25% = 45% de 400 cases = 180 obstacles)
-  const totalObstacles = 180;
-  const indestructibleCount = 80; // 20%
-  const destructibleCount = 100; // 25%
+  // Calcul des quantités
+  const totalObstacles = 240;
+  const indestructibleCount = 80; 
+  const destructibleCount = 160;
 
   cells.slice(0, totalObstacles).forEach((cell, index) => {
     const x = cell.x * 24;
