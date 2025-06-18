@@ -18,13 +18,13 @@
 }
 
 #player_red {
-  background: red;
+  /* background: red; */
   left: 0;
   top: 0;
 }
 
 #player_blue {
-  background: blue;
+  /* background: blue; */
   left: 456px; /* Opposite starting position */
   top: 456px;
 }
@@ -146,4 +146,24 @@
 
 .controls-box:nth-child(2) h3 {
   color: #06c;
+}
+
+/* Lighter shades for players based on remaining lives */
+.player-red-base { 
+  background: red; 
+}
+.player-red-2 {
+  background: #ff6666; /* lighter red */
+}
+.player-red-1 {
+  background: #ffb3b3; /* even lighter red */
+}
+.player-blue-base { 
+  background: blue; 
+}
+.player-blue-2 {
+  background: #66aaff; /* lighter blue */
+}
+.player-blue-1 {
+  background: #b3d9ff; /* even lighter blue */
 }
