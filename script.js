@@ -3,6 +3,10 @@ const playerRed = document.getElementById('player_red');
 const playerBlue = document.getElementById('player_blue');
 const step = 24;
 
+// Bombes
+let bombRed = null;
+let bombBlue = null;
+
 // Limites dynamiques
 function getMaxX() {
   return playground.clientWidth - playerRed.clientWidth;
@@ -15,10 +19,44 @@ function getMaxY() {
 let posRed = { x: 0, y: 0 };
 let posBlue = { x: getMaxX(), y: getMaxY() };
 
-const arrows = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
-const zqsd = ['z', 'q', 's', 'd'];
+// Contrôles
+const arrows = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' ']; // Espace pour bombe rouge
+const zqsd = ['z', 'q', 's', 'd', 'a']; // 'a' pour bombe bleue
 
+// Gestion des bombes
+function placeBomb(player, color) {
+  if ((player === 'red' && bombRed) || (player === 'blue' && bombBlue)) return;
+
+  const bomb = document.createElement('div');
+  bomb.className = 'bomb';
+  bomb.style.left = (player === 'red' ? posRed.x : posBlue.x) + 'px';
+  bomb.style.top = (player === 'red' ? posRed.y : posBlue.y) + 'px';
+  playground.appendChild(bomb);
+
+  if (player === 'red') bombRed = bomb;
+  else bombBlue = bomb;
+
+  setTimeout(() => {
+    bomb.remove();
+    if (player === 'red') bombRed = null;
+    else bombBlue = null;
+  }, 3000);
+}
+
+// Écouteur d'événements
 document.addEventListener('keydown', function(event) {
+  // Bombe rouge (Espace)
+  if (event.key === ' ') {
+    event.preventDefault();
+    placeBomb('red', 'red');
+  }
+
+  // Bombe bleue ('a')
+  if (event.key.toLowerCase() === 'a') {
+    event.preventDefault();
+    placeBomb('blue', 'blue');
+  }
+  
   // --- Joueur rouge (flèches) ---
   if (arrows.includes(event.key)) {
     event.preventDefault();
