@@ -36,11 +36,12 @@ function placeBomb(player, color) {
   if (player === 'red') bombRed = bomb;
   else bombBlue = bomb;
 
-  setTimeout(() => {
-    bomb.remove();
-    if (player === 'red') bombRed = null;
-    else bombBlue = null;
-  }, 3000);
+setTimeout(() => {
+  explodeBomb(bomb, player); // Nouvelle fonction d'explosion
+  bomb.remove();
+  if (player === 'red') bombRed = null;
+  else bombBlue = null;
+}, 3000);
 }
 
 // Position des bombes
@@ -131,3 +132,61 @@ document.addEventListener('keydown', function(event) {
     }
   }
 });
+
+function explodeBomb(bombElement, playerColor) {
+  const bombX = parseInt(bombElement.style.left);
+  const bombY = parseInt(bombElement.style.top);
+  
+  // Cases affectées par l'explosion
+  const explosionCells = [
+    { x: bombX, y: bombY }, // Centre
+    { x: bombX - step, y: bombY }, // Gauche
+    { x: bombX + step, y: bombY }, // Droite
+    { x: bombX, y: bombY - step }, // Haut
+    { x: bombX, y: bombY + step }  // Bas
+  ];
+
+  // Crée les effets visuels et vérifie les collisions
+  explosionCells.forEach(cell => {
+    if (cell.x >= 0 && cell.x <= getMaxX() && cell.y >= 0 && cell.y <= getMaxY()) {
+      // Animation d'explosion
+      const explosion = document.createElement('div');
+      explosion.className = 'explosion';
+      explosion.style.left = cell.x + 'px';
+      explosion.style.top = cell.y + 'px';
+      playground.appendChild(explosion);
+      
+      // Supprime l'explosion après l'animation
+      setTimeout(() => explosion.remove(), 500);
+
+      // Vérifie les joueurs touchés
+      checkPlayerHit(cell.x, cell.y);
+    }
+  });
+}
+
+function checkPlayerHit(x, y) {
+  // Vérifie le joueur rouge
+  if (posRed.x === x && posRed.y === y) {
+    playerRed.style.backgroundColor = 'black'; // Effet visuel
+    setTimeout(() => {
+      playerRed.style.backgroundColor = 'red';
+      posRed.x = 0; // Réinitialise la position
+      posRed.y = 0;
+      playerRed.style.left = '0px';
+      playerRed.style.top = '0px';
+    }, 100);
+  }
+
+  // Vérifie le joueur bleu
+  if (posBlue.x === x && posBlue.y === y) {
+    playerBlue.style.backgroundColor = 'black'; // Effet visuel
+    setTimeout(() => {
+      playerBlue.style.backgroundColor = 'blue';
+      posBlue.x = getMaxX(); // Réinitialise la position
+      posBlue.y = getMaxY();
+      playerBlue.style.left = `${posBlue.x}px`;
+      playerBlue.style.top = `${posBlue.y}px`;
+    }, 100);
+  }
+}
