@@ -94,8 +94,8 @@ export function updatePlayerColors() {
 }
 
 export function updateLives() {
-  livesRedSpan.textContent = `Red: ${state.livesRed}`;
-  livesBlueSpan.textContent = `Blue: ${state.livesBlue}`;
+  livesRedSpan.textContent = `${state.livesRed}`;
+  livesBlueSpan.textContent = `${state.livesBlue}`;
 }
 
 export function checkPlayerHit(x, y) {
