@@ -95,6 +95,7 @@ function isObstacleAt(x, y) {
   return obstacleGrid[gridY]?.[gridX];
 }
 
+
 // Update the display of lives
 function updateLives() {
   livesRedSpan.textContent = `Red: ${livesRed}`;
@@ -161,20 +162,46 @@ function explodeBomb(bombElement) {
   });
 }
 
+
 // Manage player damage and lives
+
+function updatePlayerColors() {
+  // Red player
+  playerRed.classList.remove('player-red-base', 'player-red-2', 'player-red-1');
+  if (livesRed === 2) {
+    playerRed.classList.add('player-red-2');
+  } else if (livesRed === 1) {
+    playerRed.classList.add('player-red-1');
+  } else {
+    playerRed.classList.add('player-red-base');
+  }
+
+  // Blue player
+  playerBlue.classList.remove('player-blue-base', 'player-blue-2', 'player-blue-1');
+  if (livesBlue === 2) {
+    playerBlue.classList.add('player-blue-2');
+  } else if (livesBlue === 1) {
+    playerBlue.classList.add('player-blue-1');
+  } else {
+    playerBlue.classList.add('player-blue-base');
+  }
+}
+
 function checkPlayerHit(x, y) {
   if (gameOver) return;
   // Red player hit
   if (posRed.x === x && posRed.y === y) {
     livesRed--;
     updateLives();
+    updatePlayerColors();
     playerRed.style.backgroundColor = 'black';
     setTimeout(() => {
-      playerRed.style.backgroundColor = 'red';
+      playerRed.style.backgroundColor = ''; // Remove inline color, revert to class
       posRed.x = 0;
       posRed.y = 0;
       playerRed.style.left = '0px';
       playerRed.style.top = '0px';
+      updatePlayerColors(); // Ensure correct color after respawn
     }, 100);
     if (livesRed <= 0) endGame('Red');
   }
@@ -182,13 +209,15 @@ function checkPlayerHit(x, y) {
   if (posBlue.x === x && posBlue.y === y) {
     livesBlue--;
     updateLives();
+    updatePlayerColors();
     playerBlue.style.backgroundColor = 'black';
     setTimeout(() => {
-      playerBlue.style.backgroundColor = 'blue';
+      playerBlue.style.backgroundColor = ''; // Remove inline color, revert to class
       posBlue.x = getMaxX();
       posBlue.y = getMaxY();
       playerBlue.style.left = `${posBlue.x}px`;
       playerBlue.style.top = `${posBlue.y}px`;
+      updatePlayerColors(); // Ensure correct color after respawn
     }, 100);
     if (livesBlue <= 0) endGame('Blue');
   }
@@ -206,6 +235,7 @@ restartBtn.addEventListener('click', function() {
   livesRed = 3;
   livesBlue = 3;
   updateLives();
+  updatePlayerColors();
 
   posRed = { x: 0, y: 0 };
   posBlue = { x: getMaxX(), y: getMaxY() };
@@ -213,9 +243,6 @@ restartBtn.addEventListener('click', function() {
   playerRed.style.top = posRed.y + 'px';
   playerBlue.style.left = posBlue.x + 'px';
   playerBlue.style.top = posBlue.y + 'px';
-
-  playerRed.style.backgroundColor = 'red';
-  playerBlue.style.backgroundColor = 'blue';
 
   if (bombRed) { bombRed.remove(); bombRed = null; }
   if (bombBlue) { bombBlue.remove(); bombBlue = null; }
@@ -226,6 +253,7 @@ restartBtn.addEventListener('click', function() {
 
   generateObstacles();
 });
+
 
 // Manage player movement and actions
 document.addEventListener('keydown', function(event) {
@@ -292,3 +320,4 @@ document.addEventListener('keydown', function(event) {
 // Initialization
 generateObstacles();
 updateLives();
+updatePlayerColors();
