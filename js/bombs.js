@@ -8,10 +8,9 @@ import { getMaxX, getMaxY } from './utils.js';
 export function placeBomb(player) {
   const playerType = player.toLowerCase();
   const stats = state.playerStats[playerType];
-  
+
   if (stats.activeBombs >= stats.maxBombs) return;
 
-  // Création de la bombe
   const bomb = document.createElement('div');
   bomb.className = 'bomb';
   const { x, y } = player === 'red' ? state.posRed : state.posBlue;
@@ -19,21 +18,28 @@ export function placeBomb(player) {
   bomb.style.top = y + 'px';
   playground.appendChild(bomb);
 
-  // Référence la bombe dans le state AVANT le setTimeout
   if (player === 'red') state.bombRed = bomb;
   else state.bombBlue = bomb;
 
   stats.activeBombs++;
 
+  // Si le joueur a un bonus actif, on le consomme
+  if (stats.bonusBombsLeft > 0) {
+    stats.bonusBombsLeft--;
+    // Quand le bonus est consommé, on repasse à 1 bombe max
+    if (stats.bonusBombsLeft === 0) {
+      stats.maxBombs = 1;
+    }
+  }
+
   setTimeout(() => {
-    explodeBomb(bomb); // <-- Appel de l'explosion AVANT suppression
-    bomb.remove(); // <-- Suppression après explosion
-    
+    explodeBomb(bomb); // L’explosion doit être appelée AVANT bomb.remove()
+    bomb.remove();
     if (player === 'red') state.bombRed = null;
     else state.bombBlue = null;
-    
     stats.activeBombs--;
   }, 3000);
+
 }
 
 export function explodeBomb(bombElement) {
