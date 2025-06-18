@@ -30,44 +30,39 @@ let posBlue = { x: getMaxX(), y: getMaxY() };
 function generateObstacles() {
   const cells = [];
   
-  // Définit les zones interdites autour de chaque joueur (rayon de 3 cases)
+  // Zones de sécurité (7x7 cases autour de chaque joueur)
   const safeZones = [
     { x: 0, y: 0, radius: 3 }, // Joueur rouge
     { x: 19, y: 19, radius: 3 } // Joueur bleu
   ];
 
+  // Génération de toutes les cellules sauf zones sûres
   for (let x = 0; x < 20; x++) {
     for (let y = 0; y < 20; y++) {
-      // Vérifie si la case est dans une zone sûre
-      const inSafeZone = safeZones.some(zone => {
-        return Math.abs(x - zone.x) <= zone.radius && 
-               Math.abs(y - zone.y) <= zone.radius;
-      });
-
-      if (!inSafeZone) {
-        cells.push({x, y});
-      }
+      const inSafeZone = safeZones.some(zone => 
+        Math.abs(x - zone.x) <= zone.radius && 
+        Math.abs(y - zone.y) <= zone.radius
+      );
+      
+      if (!inSafeZone) cells.push({x, y});
     }
   }
 
-  for (let x = 0; x < 20; x++) {
-    for (let y = 0; y < 20; y++) {
-      if ((x === 0 && y === 0) || (x === 19 && y === 19)) continue;
-      cells.push({x, y});
-    }
-  }
-
-  // Mélanger les cellules
+  // Mélange aléatoire
   for (let i = cells.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [cells[i], cells[j]] = [cells[j], cells[i]];
   }
 
-  // Génération des obstacles (140 au total : 15% + 20%)
-  cells.slice(0, 140).forEach((cell, index) => { // 60 + 80 = 140 obstacles
+  // Calcul des quantités (20% + 25% = 45% de 400 cases = 180 obstacles)
+  const totalObstacles = 180;
+  const indestructibleCount = 80; // 20%
+  const destructibleCount = 100; // 25%
+
+  cells.slice(0, totalObstacles).forEach((cell, index) => {
     const x = cell.x * 24;
     const y = cell.y * 24;
-    const type = index < 60 ? 'indestructible' : 'destructible'; // 60 premiers = indestructibles
+    const type = index < indestructibleCount ? 'indestructible' : 'destructible';
     
     const obstacle = document.createElement('div');
     obstacle.className = `obstacle ${type}`;
