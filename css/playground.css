@@ -1,0 +1,7 @@
+/* Playground Area */
+#playground {
+  width: 480px;
+  height: 480px;
+  border: 1px solid #ccc;
+  position: relative;
+}

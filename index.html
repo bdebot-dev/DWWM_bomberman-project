@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bomberman</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/playground.css">
+    <link rel="stylesheet" href="css/players.css">
+    <link rel="stylesheet" href="css/bombs.css">
+    <link rel="stylesheet" href="css/explosions.css">
+    <link rel="stylesheet" href="css/obstacles.css">
+    <link rel="stylesheet" href="css/hud.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/controls.css">
 </head>
 <body>
 
@@ -13,14 +20,12 @@
         <div class="players player-blue-base" id="player_blue"></div>
     </div>
 
-    <div id="hud">
-        <span id="lives_red">Red: 3</span>
-        <span id="lives_blue">Blue: 3</span>
-    </div>
-
         <div id="controls">
         <div class="controls-box">
             <h3>Red Player</h3>
+                <div class="hud">
+                    <span id="lives_red">Red: 3</span>
+                </div>
             <ul>
             <li><b>Move:</b> Arrow keys</li>
             <li><b>Drop Bomb:</b> Space</li>
@@ -28,6 +33,9 @@
         </div>
         <div class="controls-box">
             <h3>Blue Player</h3>
+                <div class="hud">
+                    <span id="lives_blue">Blue: 3</span>
+                </div>
             <ul>
             <li><b>Move:</b> Z Q S D</li>
             <li><b>Drop Bomb:</b> A</li>

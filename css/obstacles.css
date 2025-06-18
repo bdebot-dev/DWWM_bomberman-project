@@ -1,0 +1,16 @@
+/* Obstacles */
+.obstacle {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+}
+
+.indestructible {
+  background: #666;
+  border: 2px solid #333;
+}
+
+.destructible {
+  background: #8B4513;
+  border: 2px solid #654321;
+}

@@ -1,0 +1,28 @@
+/* Player Styles */
+#player_red,
+#player_blue {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  transition: left 0.1s, top 0.1s;
+}
+
+#player_red {
+  left: 0;
+  top: 0;
+}
+
+#player_blue {
+  left: 456px;
+  top: 456px;
+}
+
+/* Player color states (based on remaining lives) */
+.player-red-base { background: red; }
+.player-red-2    { background: #ff6666; }
+.player-red-1    { background: #ffb3b3; }
+.player-blue-base { background: blue; }
+.player-blue-2    { background: #66aaff; }
+.player-blue-1    { background: #b3d9ff; }
