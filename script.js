@@ -4,7 +4,9 @@ const playerBlue = document.getElementById('player_blue');
 const livesRedSpan = document.getElementById('lives_red');
 const livesBlueSpan = document.getElementById('lives_blue');
 const gameoverDiv = document.getElementById('gameover');
+const obstacleGrid = Array(20).fill().map(() => Array(20).fill(null));
 const step = 24;
+let destructibleObstacles = [];
 let livesRed = 3;
 let livesBlue = 3;
 let gameOver = false;
@@ -25,10 +27,64 @@ function getMaxY() {
 let posRed = { x: 0, y: 0 };
 let posBlue = { x: getMaxX(), y: getMaxY() };
 
+function generateObstacles() {
+  const cells = [];
+  
+  // Définit les zones interdites autour de chaque joueur (rayon de 3 cases)
+  const safeZones = [
+    { x: 0, y: 0, radius: 3 }, // Joueur rouge
+    { x: 19, y: 19, radius: 3 } // Joueur bleu
+  ];
+
+  for (let x = 0; x < 20; x++) {
+    for (let y = 0; y < 20; y++) {
+      // Vérifie si la case est dans une zone sûre
+      const inSafeZone = safeZones.some(zone => {
+        return Math.abs(x - zone.x) <= zone.radius && 
+               Math.abs(y - zone.y) <= zone.radius;
+      });
+
+      if (!inSafeZone) {
+        cells.push({x, y});
+      }
+    }
+  }
+
+  for (let x = 0; x < 20; x++) {
+    for (let y = 0; y < 20; y++) {
+      if ((x === 0 && y === 0) || (x === 19 && y === 19)) continue;
+      cells.push({x, y});
+    }
+  }
+
+  // Mélanger les cellules
+  for (let i = cells.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cells[i], cells[j]] = [cells[j], cells[i]];
+  }
+
+  // Génération des obstacles (140 au total : 15% + 20%)
+  cells.slice(0, 140).forEach((cell, index) => { // 60 + 80 = 140 obstacles
+    const x = cell.x * 24;
+    const y = cell.y * 24;
+    const type = index < 60 ? 'indestructible' : 'destructible'; // 60 premiers = indestructibles
+    
+    const obstacle = document.createElement('div');
+    obstacle.className = `obstacle ${type}`;
+    obstacle.style.left = x + 'px';
+    obstacle.style.top = y + 'px';
+    playground.appendChild(obstacle);
+    
+    obstacleGrid[cell.y][cell.x] = type;
+    if (type === 'destructible') destructibleObstacles.push(obstacle);
+  });
+}
+
 // Contrôles
 const arrows = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' ']; // Espace pour bombe rouge
 const zqsd = ['z', 'q', 's', 'd', 'a']; // 'a' pour bombe bleue
 
+generateObstacles();
 updateLives();
 
 
@@ -60,6 +116,13 @@ function isBombAt(x, y) {
   // Vérifie s'il y a une bombe bleue à ces coordonnées
   if (bombBlue && parseInt(bombBlue.style.left) === x && parseInt(bombBlue.style.top) === y) return true;
   return false;
+}
+
+// Position des obstacles
+function isObstacleAt(x, y) {
+  const gridX = x / 24;
+  const gridY = y / 24;
+  return obstacleGrid[gridY]?.[gridX];
 }
 
 // Écouteur d'événements
@@ -100,7 +163,8 @@ document.addEventListener('keydown', function(event) {
     // Collision : si la nouvelle position est occupée par le bleu ou une bombe, on bloque
     if (
       !(newX === posBlue.x && newY === posBlue.y) &&
-      !isBombAt(newX, newY)
+      !isBombAt(newX, newY) &&
+      !isObstacleAt(newX, newY)
     ) {
       posRed.x = newX;
       posRed.y = newY;
@@ -131,7 +195,8 @@ document.addEventListener('keydown', function(event) {
     // Collision : si la nouvelle position est occupée par le rouge ou une bombe, on bloque
     if (
       !(newX === posRed.x && newY === posRed.y) &&
-      !isBombAt(newX, newY)
+      !isBombAt(newX, newY) &&
+      !isObstacleAt(newX, newY)
     ) {
       posBlue.x = newX;
       posBlue.y = newY;
@@ -170,6 +235,21 @@ function explodeBomb(bombElement, playerColor) {
       // Vérifie les joueurs touchés
       checkPlayerHit(cell.x, cell.y);
     }
+
+        // Destruction des obstacles destructibles
+    const gridX = cell.x / 24;
+    const gridY = cell.y / 24;
+    if (obstacleGrid[gridY]?.[gridX] === 'destructible') {
+      const obstacle = destructibleObstacles.find(o => 
+        parseInt(o.style.left) === cell.x && 
+        parseInt(o.style.top) === cell.y
+      );
+      if (obstacle) {
+        obstacle.remove();
+        obstacleGrid[gridY][gridX] = null;
+      }
+    }
+
   });
 }
 
