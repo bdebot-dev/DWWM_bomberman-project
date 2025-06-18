@@ -33,3 +33,29 @@
   display: flex;
   justify-content: center;
 }
+
+.css-heart {
+  width: 12px;
+  height: 24px;
+  position: relative;
+  display: inline-block;
+  margin-left: 8px;
+}
+.css-heart::before,
+.css-heart::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12px;
+  width: 12px;
+  height: 18px;
+  background: red;
+  border-radius: 4.5px 4.5px 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+.css-heart::after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
