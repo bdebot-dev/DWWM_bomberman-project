@@ -11,7 +11,9 @@ export function checkBonusCollision(player) {
       // Appliquer l'effet du bonus
       if (bonus.element.dataset.type === 'multi-bomb') {
         state.playerStats[player.toLowerCase()].maxBombs = 3;
+        state.playerStats[player.toLowerCase()].bonusBombsLeft = 3;
       }
+
       
       // Retirer le bonus
       bonus.element.remove();
