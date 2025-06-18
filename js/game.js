@@ -22,6 +22,12 @@ function restartGame() {
   updateLives();
   updatePlayerColors();
 
+  // Reset player stats
+  state.playerStats.red.maxBombs = 1;
+  state.playerStats.red.activeBombs = 0;
+  state.playerStats.blue.maxBombs = 1;
+  state.playerStats.blue.activeBombs = 0;
+
   // Reset player positions
   state.posRed = { x: 0, y: 0 };
   state.posBlue = { x: getMaxX(), y: getMaxY() };
@@ -36,6 +42,12 @@ function restartGame() {
 
   // Remove all explosion effects
   document.querySelectorAll('.explosion').forEach(e => e.remove());
+
+  // Clear existing bonuses
+  state.bonuses = state.bonuses || []; // Sécurité supplémentaire
+  state.bonuses.forEach(b => b.element.remove());
+  state.bonuses = [];
+
 
   // Hide game over message and reset game state
   gameoverDiv.style.display = 'none';

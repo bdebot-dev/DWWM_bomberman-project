@@ -5,6 +5,7 @@ import { isBombAt, placeBomb } from './bombs.js';
 import { isObstacleAt } from './obstacles.js';
 import { getMaxX, getMaxY } from './utils.js';
 import { endGame } from './game.js';
+import { checkBonusCollision } from './bonus.js'; // Nouvelle importation
 
 export function handlePlayerMove(event) {
   if (state.gameOver) return;
@@ -41,6 +42,7 @@ export function handlePlayerMove(event) {
       state.posRed.y = newY;
       playerRed.style.left = state.posRed.x + 'px';
       playerRed.style.top = state.posRed.y + 'px';
+      checkBonusCollision('Red'); // Vérification après déplacement
     }
     return;
   }
@@ -65,6 +67,7 @@ export function handlePlayerMove(event) {
       state.posBlue.y = newY;
       playerBlue.style.left = state.posBlue.x + 'px';
       playerBlue.style.top = state.posBlue.y + 'px';
+      checkBonusCollision('Blue'); // Vérification après déplacement
     }
   }
 }
