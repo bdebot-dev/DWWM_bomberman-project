@@ -1,3 +1,4 @@
+/* === Playground Area === */
 #playground {
   width: 480px;
   height: 480px;
@@ -5,7 +6,9 @@
   position: relative;
 }
 
-#player_red, #player_blue {
+/* === Player Styles === */
+#player_red,
+#player_blue {
   width: 24px;
   height: 24px;
   position: absolute;
@@ -22,10 +25,11 @@
 
 #player_blue {
   background: blue;
-  left: 456px; /* Position de départ opposée */
+  left: 456px; /* Opposite starting position */
   top: 456px;
 }
 
+/* === Bomb Styles and Animation === */
 .bomb {
   width: 20px;
   height: 20px;
@@ -41,6 +45,7 @@
   100% { transform: scale(1); }
 }
 
+/* === Explosion Styles and Animation === */
 .explosion {
   width: 24px;
   height: 24px;
@@ -56,6 +61,7 @@
   100% { transform: scale(2); opacity: 0; }
 }
 
+/* === HUD and Game Over Message === */
 #hud {
   margin: 10px 0;
   font-size: 18px;
@@ -63,6 +69,7 @@
   justify-content: space-between;
   width: 480px;
 }
+
 #gameover {
   font-size: 28px;
   color: #fff;
@@ -78,6 +85,7 @@
   min-width: 200px;
 }
 
+/* === Restart Button === */
 #restart_btn {
   margin-top: 15px;
   padding: 8px 24px;
@@ -94,6 +102,7 @@
   background: #218838;
 }
 
+/* === Obstacles === */
 .obstacle {
   width: 24px;
   height: 24px;
