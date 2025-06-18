@@ -43,6 +43,17 @@ function placeBomb(player, color) {
   }, 3000);
 }
 
+// Position des bombes
+function isBombAt(x, y) {
+  // Vérifie s'il y a une bombe rouge à ces coordonnées
+  if (bombRed && parseInt(bombRed.style.left) === x && parseInt(bombRed.style.top) === y) return true;
+  // Vérifie s'il y a une bombe bleue à ces coordonnées
+  if (bombBlue && parseInt(bombBlue.style.left) === x && parseInt(bombBlue.style.top) === y) return true;
+  return false;
+}
+
+
+
 // Écouteur d'événements
 document.addEventListener('keydown', function(event) {
   // Bombe rouge (Espace)
@@ -56,7 +67,7 @@ document.addEventListener('keydown', function(event) {
     event.preventDefault();
     placeBomb('blue', 'blue');
   }
-  
+
   // --- Joueur rouge (flèches) ---
   if (arrows.includes(event.key)) {
     event.preventDefault();
@@ -77,8 +88,11 @@ document.addEventListener('keydown', function(event) {
         newY = Math.min(getMaxY(), posRed.y + step);
         break;
     }
-    // Collision : si la nouvelle position est occupée par le bleu, on bloque
-    if (!(newX === posBlue.x && newY === posBlue.y)) {
+    // Collision : si la nouvelle position est occupée par le bleu ou une bombe, on bloque
+    if (
+      !(newX === posBlue.x && newY === posBlue.y) &&
+      !isBombAt(newX, newY)
+    ) {
       posRed.x = newX;
       posRed.y = newY;
       playerRed.style.left = posRed.x + 'px';
@@ -105,8 +119,11 @@ document.addEventListener('keydown', function(event) {
         newY = Math.min(getMaxY(), posBlue.y + step);
         break;
     }
-    // Collision : si la nouvelle position est occupée par le rouge, on bloque
-    if (!(newX === posRed.x && newY === posRed.y)) {
+    // Collision : si la nouvelle position est occupée par le rouge ou une bombe, on bloque
+    if (
+      !(newX === posRed.x && newY === posRed.y) &&
+      !isBombAt(newX, newY)
+    ) {
       posBlue.x = newX;
       posBlue.y = newY;
       playerBlue.style.left = posBlue.x + 'px';
