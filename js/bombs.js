@@ -1,0 +1,68 @@
+import { playground } from './dom.js';
+import { step } from './constants.js';
+import { state } from './state.js';
+import { isObstacleAt } from './obstacles.js';
+import { checkPlayerHit } from './players.js';
+import { getMaxX, getMaxY } from './utils.js';
+
+export function placeBomb(player) {
+  if ((player === 'red' && state.bombRed) || (player === 'blue' && state.bombBlue)) return;
+  const bomb = document.createElement('div');
+  bomb.className = 'bomb';
+  const { x, y } = player === 'red' ? state.posRed : state.posBlue;
+  bomb.style.left = x + 'px';
+  bomb.style.top = y + 'px';
+  playground.appendChild(bomb);
+  if (player === 'red') state.bombRed = bomb;
+  else state.bombBlue = bomb;
+
+  setTimeout(() => {
+    explodeBomb(bomb);
+    bomb.remove();
+    if (player === 'red') state.bombRed = null;
+    else state.bombBlue = null;
+  }, 3000);
+}
+
+export function explodeBomb(bombElement) {
+  const bombX = parseInt(bombElement.style.left);
+  const bombY = parseInt(bombElement.style.top);
+  const explosionCells = [
+    { x: bombX, y: bombY },
+    { x: bombX - step, y: bombY },
+    { x: bombX + step, y: bombY },
+    { x: bombX, y: bombY - step },
+    { x: bombX, y: bombY + step }
+  ];
+
+  explosionCells.forEach(cell => {
+    if (cell.x >= 0 && cell.x <= getMaxX() && cell.y >= 0 && cell.y <= getMaxY()) {
+      const explosion = document.createElement('div');
+      explosion.className = 'explosion';
+      explosion.style.left = cell.x + 'px';
+      explosion.style.top = cell.y + 'px';
+      playground.appendChild(explosion);
+      setTimeout(() => explosion.remove(), 500);
+      checkPlayerHit(cell.x, cell.y);
+    }
+    // Destroy destructible obstacle
+    const gridX = cell.x / step;
+    const gridY = cell.y / step;
+    if (state.obstacleGrid[gridY]?.[gridX] === 'destructible') {
+      const obstacle = state.destructibleObstacles.find(o => 
+        parseInt(o.style.left) === cell.x && 
+        parseInt(o.style.top) === cell.y
+      );
+      if (obstacle) {
+        obstacle.remove();
+        state.obstacleGrid[gridY][gridX] = null;
+      }
+    }
+  });
+}
+
+export function isBombAt(x, y) {
+  if (state.bombRed && parseInt(state.bombRed.style.left) === x && parseInt(state.bombRed.style.top) === y) return true;
+  if (state.bombBlue && parseInt(state.bombBlue.style.left) === x && parseInt(state.bombBlue.style.top) === y) return true;
+  return false;
+}
