@@ -9,7 +9,9 @@ import { getMaxX, getMaxY } from './utils.js';
 export function endGame(loser) {
   state.gameOver = true;
   gameoverDiv.style.display = 'block';
-  document.getElementById('gameover_message').textContent = `${loser} lost the game!`;
+  // Détermine le gagnant
+  let winner = (loser === 'Red') ? 'Blue' : 'Red';
+  document.getElementById('gameover_message').textContent = `${winner} is victorious! 🎉`;
 }
 
 /**
