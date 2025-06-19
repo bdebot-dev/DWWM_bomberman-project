@@ -121,7 +121,7 @@ export function checkPlayerHit(x, y) {
   if (
     state.posRed.x === x &&
     state.posRed.y === y &&
-    !state.playerStats.red.invincible // ← Ajouté !
+    !state.playerStats.red.invincible
   ) {
     state.livesRed--;
     updateLives();

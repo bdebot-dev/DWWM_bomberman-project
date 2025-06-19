@@ -11,16 +11,9 @@ export const state = {
   obstacleGrid: Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill(null)),
   posRed: { x: 0, y: 0 },
   posBlue: { x: getMaxX(), y: getMaxY() },
-    playerStats: {
-    red: { maxBombs: 1, activeBombs: 0 },
-    blue: { maxBombs: 1, activeBombs: 0 }
+  playerStats: {
+    red:  { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false },
+    blue: { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false }
   },
   bonuses: []
-};
-
-export const bonuses = []; // Liste des bonus actifs
-
-export const playerStats = {
-  red:  { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false },
-  blue: { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false }
 };
