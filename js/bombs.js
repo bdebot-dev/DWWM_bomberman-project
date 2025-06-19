@@ -80,7 +80,7 @@ export function explodeBomb(bombElement) {
           state.obstacleGrid[gridY][gridX] = null;
 
           // 10% chance de générer un bonus (ajouté ici)
-          if (Math.random() < 1/7) {
+          if (Math.random() < 1/5) {
             const bonus = document.createElement('div');
             bonus.className = 'bonus';
 
