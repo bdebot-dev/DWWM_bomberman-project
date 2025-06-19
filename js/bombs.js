@@ -1,6 +1,6 @@
 import { playground } from './dom.js';
 import { step } from './constants.js';
-import { state } from './state.js'; // Import correct
+import { state } from './state.js';
 import { isObstacleAt } from './obstacles.js';
 import { checkPlayerHit } from './players.js';
 import { getMaxX, getMaxY } from './utils.js';
@@ -80,12 +80,20 @@ export function explodeBomb(bombElement) {
           state.obstacleGrid[gridY][gridX] = null;
 
           // 10% chance de générer un bonus (ajouté ici)
-          if (Math.random() < 0.1) {
+          if (Math.random() < 1/7) {
             const bonus = document.createElement('div');
             bonus.className = 'bonus';
 
-            // Choix aléatoire du type de bonus (50% multi-bomb, 50% invincibility)
-            const bonusType = Math.random() > 0.5 ? 'multi-bomb' : 'invincibility';
+            // 1/3 chance deadly, sinon réparti entre multi-bomb et invincibility
+            const rand = Math.random();
+            let bonusType;
+            if (rand < 1/3) {
+              bonusType = 'deadly';
+            } else if (rand < 2/3) {
+              bonusType = 'multi-bomb';
+            } else {
+              bonusType = 'invincibility';
+            }
             bonus.classList.add(bonusType);
             bonus.dataset.type = bonusType;
 
@@ -94,6 +102,7 @@ export function explodeBomb(bombElement) {
             playground.appendChild(bonus);
             state.bonuses.push({ element: bonus, x: cell.x, y: cell.y });
           }
+
         }
       }
     }

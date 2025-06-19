@@ -1,4 +1,5 @@
 /* Bonus: Multi-bomb Powerup */
+
 .bonus {
   width: 20px;
   height: 20px;
@@ -14,7 +15,9 @@
   100% { transform: translateY(0px); }
 }
 
+
 /* Bonus: Invicibility */
+
 .bonus.invincibility {
   background: #ff66ff; /* Rose vif */
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
@@ -25,4 +28,36 @@
   0% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.1); opacity: 0.8; }
   100% { transform: scale(1); opacity: 1; }
+}
+
+/* Bonus: deadly-bonus-cross */
+
+.bonus.deadly {
+  background: transparent;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+}
+
+.bonus.deadly::before,
+.bonus.deadly::after {
+  content: "";
+  position: absolute;
+  background: black;
+}
+
+.bonus.deadly::before {
+  left: 9px;
+  top: 2px;
+  width: 2px;
+  height: 16px;
+  border-radius: 1px;
+}
+
+.bonus.deadly::after {
+  top: 9px;
+  left: 2px;
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
 }
