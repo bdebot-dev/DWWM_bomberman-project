@@ -19,7 +19,8 @@ export const state = {
 };
 
 export const bonuses = []; // Liste des bonus actifs
+
 export const playerStats = {
-  red:  { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0 },
-  blue: { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0 }
+  red:  { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false },
+  blue: { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false }
 };

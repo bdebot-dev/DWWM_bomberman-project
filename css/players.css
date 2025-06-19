@@ -26,3 +26,15 @@
 .player-blue-base { background: blue; }
 .player-blue-2    { background: #66aaff; }
 .player-blue-1    { background: #b3d9ff; }
+
+/* Bonus Invincibility */
+
+.invincible {
+  animation: invincible-effect 0.5s infinite;
+}
+
+@keyframes invincible-effect {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}

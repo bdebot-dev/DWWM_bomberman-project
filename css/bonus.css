@@ -13,3 +13,16 @@
   50% { transform: translateY(-8px); }
   100% { transform: translateY(0px); }
 }
+
+/* Bonus: Invicibility */
+.bonus.invincibility {
+  background: #ff66ff; /* Rose vif */
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  animation: float 2s ease-in-out infinite, pulse-pink 1.5s infinite;
+}
+
+@keyframes pulse-pink {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}

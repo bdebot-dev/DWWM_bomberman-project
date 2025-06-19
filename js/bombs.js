@@ -83,9 +83,14 @@ export function explodeBomb(bombElement) {
           if (Math.random() < 0.1) {
             const bonus = document.createElement('div');
             bonus.className = 'bonus';
+
+            // Choix aléatoire du type de bonus (50% multi-bomb, 50% invincibility)
+            const bonusType = Math.random() > 0.5 ? 'multi-bomb' : 'invincibility';
+            bonus.classList.add(bonusType);
+            bonus.dataset.type = bonusType;
+
             bonus.style.left = cell.x + 'px';
             bonus.style.top = cell.y + 'px';
-            bonus.dataset.type = 'multi-bomb';
             playground.appendChild(bonus);
             state.bonuses.push({ element: bonus, x: cell.x, y: cell.y });
           }

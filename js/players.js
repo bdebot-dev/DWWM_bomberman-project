@@ -5,7 +5,23 @@ import { isBombAt, placeBomb } from './bombs.js';
 import { isObstacleAt } from './obstacles.js';
 import { getMaxX, getMaxY } from './utils.js';
 import { endGame } from './game.js';
-import { checkBonusCollision } from './bonus.js'; // Nouvelle importation
+import { checkBonusCollision } from './bonus.js';
+
+const INVINCIBILITY_DURATION = 5000; // 5 secondes
+
+export function activateInvincibility(player) {
+  // Sélectionne l'élément du joueur
+  const playerElement = player === 'Red' ? playerRed : playerBlue;
+  // Ajoute la classe CSS pour l'effet visuel
+  playerElement.classList.add('invincible');
+  // Stocke l'état d'invincibilité dans le state (optionnel mais recommandé pour la logique)
+  state.playerStats[player.toLowerCase()].invincible = true;
+
+  setTimeout(() => {
+    playerElement.classList.remove('invincible');
+    state.playerStats[player.toLowerCase()].invincible = false;
+  }, INVINCIBILITY_DURATION);
+}
 
 export function handlePlayerMove(event) {
   if (state.gameOver) return;
@@ -100,8 +116,13 @@ export function updateLives() {
 
 export function checkPlayerHit(x, y) {
   if (state.gameOver) return;
+
   // Red player hit
-  if (state.posRed.x === x && state.posRed.y === y) {
+  if (
+    state.posRed.x === x &&
+    state.posRed.y === y &&
+    !state.playerStats.red.invincible // ← Ajouté !
+  ) {
     state.livesRed--;
     updateLives();
     updatePlayerColors();
@@ -116,8 +137,13 @@ export function checkPlayerHit(x, y) {
     }, 100);
     if (state.livesRed <= 0) endGame('Red');
   }
+
   // Blue player hit
-  if (state.posBlue.x === x && state.posBlue.y === y) {
+  if (
+    state.posBlue.x === x &&
+    state.posBlue.y === y &&
+    !state.playerStats.blue.invincible // ← Ajouté !
+  ) {
     state.livesBlue--;
     updateLives();
     updatePlayerColors();
@@ -133,3 +159,4 @@ export function checkPlayerHit(x, y) {
     if (state.livesBlue <= 0) endGame('Blue');
   }
 }
+

@@ -59,6 +59,12 @@ function restartGame() {
 
   // Regenerate obstacles
   generateObstacles();
+
+    // Réinitialiser les effets d'invincibilité
+    state.playerStats.red.invincible = false;
+    state.playerStats.blue.invincible = false;
+    playerRed.classList.remove('invincible');
+    playerBlue.classList.remove('invincible');
 }
 
 // Initialization
