@@ -38,7 +38,7 @@ export function placeBomb(player) {
     if (player === 'red') state.bombRed = null;
     else state.bombBlue = null;
     stats.activeBombs--;
-  }, 3000);
+  }, 1500);
 
 }
 
