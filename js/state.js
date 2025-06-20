@@ -12,8 +12,8 @@ export const state = {
   posRed: { x: 0, y: 0 },
   posBlue: { x: getMaxX(), y: getMaxY() },
   playerStats: {
-    red:  { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false,  blastRadius: false },
-    blue: { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false,  blastRadius: false  }
+    red:  { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false,  blastRadius: false, speedBoostMoves: 0 },
+    blue: { maxBombs: 1, activeBombs: 0, bonusBombsLeft: 0, invincible: false,  blastRadius: false, speedBoostMoves: 0 }
   },
   bonuses: []
 };
