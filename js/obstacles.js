@@ -27,8 +27,8 @@ export function generateObstacles() {
   }
 
   // Place obstacles
-  const indestructibleCount = 80;
-  const destructibleCount = 160;
+  const indestructibleCount = 40;
+  const destructibleCount = 200;
   state.destructibleObstacles = [];
   state.obstacleGrid = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill(null));
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
