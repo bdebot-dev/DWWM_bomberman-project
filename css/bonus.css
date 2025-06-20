@@ -75,3 +75,16 @@
   50% { transform: scale(1.2); }
   100% { transform: scale(1); }
 }
+
+/* Speed Boost bonus */
+.bonus.speed-boost {
+  background: purple;
+  border-radius: 50%;
+  animation: pulse-purple 1s infinite;
+}
+
+@keyframes pulse-purple {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}

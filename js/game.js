@@ -33,6 +33,8 @@ function restartGame() {
   state.playerStats.blue.bonusBombsLeft = 0;
   state.playerStats.red.blastRadius = false;
   state.playerStats.blue.blastRadius = false;
+  state.playerStats.red.speedBoostMoves = 0;
+  state.playerStats.blue.speedBoostMoves = 0;
 
   // Reset player positions
   state.posRed = { x: 0, y: 0 };

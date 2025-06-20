@@ -65,6 +65,11 @@ export function checkBonusCollision(player) {
           state.playerStats[playerKey].blastRadius = false;
         }, 30000);
       }
+      if (bonus.element.dataset.type === 'speed-boost') {
+        state.playerStats[playerKey].speedBoostMoves = 10;
+        console.log(`${player} collected Speed Boost! Moves left: 10`);
+      }
+
       bonus.element.remove();
       state.bonuses.splice(i, 1);
     }
