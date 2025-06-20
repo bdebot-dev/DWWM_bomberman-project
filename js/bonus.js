@@ -12,7 +12,13 @@ export function checkBonusCollision(player) {
   for (let i = state.bonuses.length - 1; i >= 0; i--) {
     const bonus = state.bonuses[i];
     if (bonus.x === playerX && bonus.y === playerY) {
-      if (bonus.element.dataset.type === 'deadly') {
+    if (bonus.element.dataset.type === 'deadly') {
+      // Ne rien faire si le joueur est invincible
+      if (state.playerStats[playerKey].invincible) {
+        // Optionnel : feedback visuel ou sonore pour montrer l'immunité
+        // Par exemple : playerRed.classList.add('immune-flash');
+        // setTimeout(() => playerRed.classList.remove('immune-flash'), 200);
+      } else {
         // Le joueur perd une vie immédiatement
         if (player === 'Red') {
           state.livesRed--;
@@ -44,6 +50,7 @@ export function checkBonusCollision(player) {
           if (state.livesBlue <= 0) endGame('Blue');
         }
       }
+    }
       if (bonus.element.dataset.type === 'multi-bomb') {
         state.playerStats[playerKey].maxBombs = 3;
         state.playerStats[playerKey].bonusBombsLeft = 3;
@@ -67,7 +74,7 @@ export function checkBonusCollision(player) {
       }
       if (bonus.element.dataset.type === 'speed-boost') {
         state.playerStats[playerKey].speedBoostMoves = 10;
-        console.log(`${player} collected Speed Boost! Moves left: 10`);
+        // console.log(`${player} collected Speed Boost! Moves left: 10`);
       }
 
       bonus.element.remove();
