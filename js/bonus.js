@@ -58,6 +58,13 @@ export function checkBonusCollision(player) {
           playerElem.classList.remove('invincible');
         }, 5000);
       }
+      if (bonus.element.dataset.type === 'blast-radius') {
+        state.playerStats[playerKey].blastRadius = true;
+        // Effet temporaire : 30 secondes (modifiable)
+        setTimeout(() => {
+          state.playerStats[playerKey].blastRadius = false;
+        }, 30000);
+      }
       bonus.element.remove();
       state.bonuses.splice(i, 1);
     }
