@@ -61,3 +61,17 @@
   height: 2px;
   border-radius: 1px;
 }
+
+/* Bomb blast radius bonus */
+
+.bonus.blast-radius {
+  background: #00ff00; /* Vert vif */
+  border-radius: 50%;
+  animation: pulse-green 1s infinite;
+}
+
+@keyframes pulse-green {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}

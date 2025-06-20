@@ -12,11 +12,14 @@ export function placeBomb(player) {
   if (stats.activeBombs >= stats.maxBombs) return;
 
   const bomb = document.createElement('div');
+  bomb.dataset.hasBlastRadius = stats.blastRadius; // Stocke l'état du bonus
   bomb.className = 'bomb';
   const { x, y } = player === 'red' ? state.posRed : state.posBlue;
   bomb.style.left = x + 'px';
   bomb.style.top = y + 'px';
   playground.appendChild(bomb);
+
+  
 
   if (player === 'red') state.bombRed = bomb;
   else state.bombBlue = bomb;
@@ -45,13 +48,31 @@ export function placeBomb(player) {
 export function explodeBomb(bombElement) {
   const bombX = parseInt(bombElement.style.left);
   const bombY = parseInt(bombElement.style.top);
-  const explosionCells = [
-    { x: bombX, y: bombY },
-    { x: bombX - step, y: bombY },
-    { x: bombX + step, y: bombY },
-    { x: bombX, y: bombY - step },
-    { x: bombX, y: bombY + step }
-  ];
+
+  
+  let explosionCells = [];
+  const hasBlastRadius = bombElement.dataset.hasBlastRadius === 'true';
+
+  if (hasBlastRadius) {
+    // Grille 3x3 (9 cellules)
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        explosionCells.push({ 
+          x: bombX + dx * step, 
+          y: bombY + dy * step 
+        });
+      }
+    }
+  } else {
+    // Croix classique (5 cellules)
+    explosionCells = [
+      { x: bombX, y: bombY },
+      { x: bombX - step, y: bombY },
+      { x: bombX + step, y: bombY },
+      { x: bombX, y: bombY - step },
+      { x: bombX, y: bombY + step }
+    ];
+  }
 
   explosionCells.forEach(cell => {
     if (cell.x >= 0 && cell.x <= getMaxX() && cell.y >= 0 && cell.y <= getMaxY()) {
@@ -79,20 +100,22 @@ export function explodeBomb(bombElement) {
           obstacle.remove();
           state.obstacleGrid[gridY][gridX] = null;
 
-          // 10% chance de générer un bonus (ajouté ici)
+          // 1 chance sur 7 de générer un bonus
           if (Math.random() < 1/7) {
             const bonus = document.createElement('div');
             bonus.className = 'bonus';
 
-            // 1/3 chance deadly, sinon réparti entre multi-bomb et invincibility
+            // Répartition des types de bonus (25% chacun)
             const rand = Math.random();
             let bonusType;
-            if (rand < 1/3) {
+            if (rand < 0.25) {
               bonusType = 'deadly';
-            } else if (rand < 2/3) {
+            } else if (rand < 0.5) {
               bonusType = 'multi-bomb';
-            } else {
+            } else if (rand < 0.75) {
               bonusType = 'invincibility';
+            } else {
+              bonusType = 'blast-radius'; // Nouveau bonus
             }
             bonus.classList.add(bonusType);
             bonus.dataset.type = bonusType;
