@@ -5,13 +5,39 @@ import { state } from './state.js';
 import { playerRed, playerBlue } from './dom.js';
 import { getMaxX, getMaxY } from './utils.js';
 
+function promptPlayerNames() {
+  // Valeurs par défaut
+  let redName = prompt("Enter Red Player's name:", "Red Player");
+  let blueName = prompt("Enter Blue Player's name:", "Blue Player");
+
+  // Fallback si l'utilisateur annule ou laisse vide
+  if (!redName || redName.trim() === "") redName = "Red Player";
+  if (!blueName || blueName.trim() === "") blueName = "Blue Player";
+
+  // Stocker dans le state pour usage ultérieur
+  state.playerNames = {
+    red: redName,
+    blue: blueName
+  };
+
+  // Mettre à jour l'affichage
+  document.getElementById('player_red_name').textContent = redName;
+  document.getElementById('player_blue_name').textContent = blueName;
+}
+
+// Appel juste avant initializeGame()
+promptPlayerNames();
+initializeGame();
+
+
 // Display the game over message
 export function endGame(loser) {
   state.gameOver = true;
   gameoverDiv.style.display = 'block';
   // Détermine le gagnant
-  let winner = (loser === 'Red') ? 'Blue' : 'Red';
-  document.getElementById('gameover_message').textContent = `${winner} is victorious! 🎉`;
+  let winnerKey = (loser === 'Red') ? 'blue' : 'red';
+  let winnerName = state.playerNames && state.playerNames[winnerKey] ? state.playerNames[winnerKey] : winnerKey.charAt(0).toUpperCase() + winnerKey.slice(1) + " Player";
+  document.getElementById('gameover_message').textContent = `${winnerName} is victorious! 🎉`;
 }
 
 /**
