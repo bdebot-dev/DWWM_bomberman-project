@@ -16,68 +16,68 @@
     <link rel="stylesheet" href="css/controls.css">
 </head>
 <body>
+    <main>
+        <section id="playground">
+            <div class="players player-red-base" id="player_red"></div>
+            <div class="players player-blue-base" id="player_blue"></div>
+        </section>
 
-    <div id="playground">
-        <div class="players player-red-base" id="player_red"></div>
-        <div class="players player-blue-base" id="player_blue"></div>
-    </div>
-
-    <section id="align">
-
-    <div id="controls">
-        <div class="controls-box">
-            <h3>Red Player</h3>
-                <div class="hud">
-                    <span id="lives_red"> 3 </span> <span class="css-heart"></span>
+        <aside>
+            <div id="controls">
+                <div class="controls-box">
+                    <h3>Red Player</h3>
+                        <div class="hud">
+                            <span id="lives_red"> 3 </span> <span class="css-heart"></span>
+                        </div>
+                    <ul>
+                    <li><b>Move:</b> Arrow keys</li>
+                    <li><b>Drop Bomb:</b> Space</li>
+                    </ul>
                 </div>
-            <ul>
-            <li><b>Move:</b> Arrow keys</li>
-            <li><b>Drop Bomb:</b> Space</li>
-            </ul>
-        </div>
-        <div class="controls-box">
-            <h3>Blue Player</h3>
-                <div class="hud">
-                    <span id="lives_blue"> 3 </span><span class="css-heart"></span>
+                <div class="controls-box">
+                    <h3>Blue Player</h3>
+                        <div class="hud">
+                            <span id="lives_blue"> 3 </span><span class="css-heart"></span>
+                        </div>
+                    <ul>
+                    <li><b>Move:</b> Z Q S D</li>
+                    <li><b>Drop Bomb:</b> A</li>
+                    </ul>
                 </div>
-            <ul>
-            <li><b>Move:</b> Z Q S D</li>
-            <li><b>Drop Bomb:</b> A</li>
-            </ul>
+            </div>
+
+                <div class="bonus-summary">
+                <h3>Bonuses & Effects</h3>
+                <ul>
+                    <li>
+                        <span class="bonus multi-bomb"></span>
+                        <b>Multi-bomb</b> (yellow triangle) : Place up to 3 bombs simultaneously (3 uses)
+                    </li>
+                    <li>
+                        <span class="bonus invincibility"></span>
+                        <b>Invincibility</b> (pink triangle): Immune to bombs and deadly bonus for 5 seconds
+                    </li>
+                    <li>
+                        <span class="bonus blast-radius"></span>
+                        <b>Blast Radius</b> (green circle): Bombs explode in a 3x3 area for 30 seconds
+                    </li>
+                    <li>
+                        <span class="bonus speed-boost"></span>
+                        <b>Speed Boost</b> (purple circle): Move two cells at once for 10 moves
+                    </li>
+                    <li>
+                        <span class="bonus deadly"></span>
+                        <b>Deadly</b> (black cross): Lose one life instantly on contact
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div id="gameover" style="display:none;">
+            <span id="gameover_message"></span><br>
+            <button id="restart_btn">Restart</button>
         </div>
-    </div>
-
-        <div id="bonus-summary" class="bonus-summary">
-        <h3>Bonuses & Effects</h3>
-        <ul>
-            <li>
-                <span class="bonus multi-bomb"></span>
-                <b>Multi-bomb</b> (yellow triangle) : Place up to 3 bombs simultaneously (3 uses)
-            </li>
-            <li>
-                <span class="bonus invincibility"></span>
-                <b>Invincibility</b> (pink triangle): Immune to bombs and deadly bonus for 5 seconds
-            </li>
-            <li>
-                <span class="bonus blast-radius"></span>
-                <b>Blast Radius</b> (green circle): Bombs explode in a 3x3 area for 30 seconds
-            </li>
-            <li>
-                <span class="bonus speed-boost"></span>
-                <b>Speed Boost</b> (purple circle): Move two cells at once for 10 moves
-            </li>
-            <li>
-                <span class="bonus deadly"></span>
-                <b>Deadly</b> (black cross): Lose one life instantly on contact
-            </li>
-        </ul>
-    </div>
-    </section>
-
-    <div id="gameover" style="display:none;">
-        <span id="gameover_message"></span><br>
-        <button id="restart_btn">Restart</button>
-    </div>
+    </main>
 
     <script type="module" src="js/game.js"></script>
 </body>
