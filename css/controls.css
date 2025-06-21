@@ -27,6 +27,12 @@
   color: #06c;
 }
 
+.controls-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .hud {
   margin: 10px 0;
   font-size: 18px;
@@ -59,3 +65,4 @@
   transform: rotate(45deg);
   transform-origin: 100% 100%;
 }
+
