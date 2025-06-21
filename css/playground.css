@@ -1,4 +1,12 @@
 /* Playground Area */
+
+body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+}
+
 #playground {
   width: 480px;
   height: 480px;

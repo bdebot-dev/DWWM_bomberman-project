@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bomberman</title>
     <link rel="stylesheet" href="css/playground.css">
+    <link rel="stylesheet" href="css/bonus-summary.css">
     <link rel="stylesheet" href="css/players.css">
     <link rel="stylesheet" href="css/bombs.css">
     <link rel="stylesheet" href="css/explosions.css">
@@ -21,7 +22,9 @@
         <div class="players player-blue-base" id="player_blue"></div>
     </div>
 
-        <div id="controls">
+    <section id="align">
+
+    <div id="controls">
         <div class="controls-box">
             <h3>Red Player</h3>
                 <div class="hud">
@@ -43,6 +46,33 @@
             </ul>
         </div>
     </div>
+
+        <div id="bonus-summary" class="bonus-summary">
+        <h3>Bonuses & Effects</h3>
+        <ul>
+            <li>
+                <span class="bonus multi-bomb"></span>
+                <b>Multi-bomb</b> (yellow triangle) : Place up to 3 bombs simultaneously (3 uses)
+            </li>
+            <li>
+                <span class="bonus invincibility"></span>
+                <b>Invincibility</b> (pink triangle): Immune to bombs and deadly bonus for 5 seconds
+            </li>
+            <li>
+                <span class="bonus blast-radius"></span>
+                <b>Blast Radius</b> (green circle): Bombs explode in a 3x3 area for 30 seconds
+            </li>
+            <li>
+                <span class="bonus speed-boost"></span>
+                <b>Speed Boost</b> (purple circle): Move two cells at once for 10 moves
+            </li>
+            <li>
+                <span class="bonus deadly"></span>
+                <b>Deadly</b> (black cross): Lose one life instantly on contact
+            </li>
+        </ul>
+    </div>
+    </section>
 
     <div id="gameover" style="display:none;">
         <span id="gameover_message"></span><br>
