@@ -36,7 +36,7 @@
   background: transparent;
   width: 20px;
   height: 20px;
-  position: absolute;
+  /* position: absolute; */
 }
 
 .bonus.deadly::before,
