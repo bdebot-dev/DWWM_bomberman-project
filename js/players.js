@@ -62,7 +62,6 @@ export function handlePlayerMove(event) {
       const nextX = newX + stepX;
       const nextY = newY + stepY;
       
-      // Vérifier la validité de la position
       if (
         nextX >= 0 && nextX <= getMaxX() &&
         nextY >= 0 && nextY <= getMaxY() &&
@@ -70,12 +69,30 @@ export function handlePlayerMove(event) {
         !isBombAt(nextX, nextY) &&
         !isObstacleAt(nextX, nextY)
       ) {
+        // Mise à jour intermédiaire de la position
+        const prevX = newX;
+        const prevY = newY;
         newX = nextX;
         newY = nextY;
+
+        // Mettre à jour temporairement la position dans le state
+        state.posRed.x = newX;
+        state.posRed.y = newY;
+        playerRed.style.left = newX + 'px';
+        playerRed.style.top = newY + 'px';
+
+        // Vérifier les collisions sur la case intermédiaire
+        checkBonusCollision('Red');
       } else {
+        // Restaurer la position précédente si le mouvement est bloqué
+        state.posRed.x = prevX;
+        state.posRed.y = prevY;
+        playerRed.style.left = prevX + 'px';
+        playerRed.style.top = prevY + 'px';
         break;
       }
     }
+
 
     // Mise à jour position
     state.posRed.x = newX;
@@ -94,53 +111,62 @@ export function handlePlayerMove(event) {
 
 
 
-  // Blue player movement (ZQSD)
-  const key = event.key.toLowerCase();
-  if (zqsd.includes(key)) {
-    event.preventDefault();
-    
-    let stepX = 0;
-    let stepY = 0;
-    switch (key) {
-      case 'q': stepX = -step; break;
-      case 'd': stepX = step; break;
-      case 'z': stepY = -step; break;
-      case 's': stepY = step; break;
-    }
-
-    const moves = state.playerStats.blue.speedBoostMoves > 0 ? 2 : 1;
-    let newX = state.posBlue.x;
-    let newY = state.posBlue.y;
-
-    for (let i = 0; i < moves; i++) {
-      const nextX = newX + stepX;
-      const nextY = newY + stepY;
+    // Blue player movement (ZQSD)
+    const key = event.key.toLowerCase();
+    if (zqsd.includes(key)) {
+      event.preventDefault();
       
-      if (
-        nextX >= 0 && nextX <= getMaxX() &&
-        nextY >= 0 && nextY <= getMaxY() &&
-        !(nextX === state.posRed.x && nextY === state.posRed.y) &&
-        !isBombAt(nextX, nextY) &&
-        !isObstacleAt(nextX, nextY)
-      ) {
-        newX = nextX;
-        newY = nextY;
-      } else {
-        break;
+      let stepX = 0;
+      let stepY = 0;
+      switch (key) {
+        case 'q': stepX = -step; break;
+        case 'd': stepX = step; break;
+        case 'z': stepY = -step; break;
+        case 's': stepY = step; break;
+      }
+
+      const moves = state.playerStats.blue.speedBoostMoves > 0 ? 2 : 1;
+      let currentX = state.posBlue.x;
+      let currentY = state.posBlue.y;
+
+      for (let i = 0; i < moves; i++) {
+        const nextX = currentX + stepX;
+        const nextY = currentY + stepY;
+        
+        // Vérifier la validité de la position
+        if (
+          nextX >= 0 && nextX <= getMaxX() &&
+          nextY >= 0 && nextY <= getMaxY() &&
+          !(nextX === state.posRed.x && nextY === state.posRed.y) &&
+          !isBombAt(nextX, nextY) &&
+          !isObstacleAt(nextX, nextY)
+        ) {
+          currentX = nextX;
+          currentY = nextY;
+
+          // Mise à jour temporaire de la position
+          state.posBlue.x = currentX;
+          state.posBlue.y = currentY;
+          playerBlue.style.left = currentX + 'px';
+          playerBlue.style.top = currentY + 'px';
+
+          // Vérifier les collisions à chaque étape
+          checkBonusCollision('Blue');
+
+          // Synchroniser après le bonus
+          currentX = state.posBlue.x;
+          currentY = state.posBlue.y;
+        } else {
+          break;
+        }
+      }
+
+      // Décrémenter le compteur si bonus actif
+      if (state.playerStats.blue.speedBoostMoves > 0) {
+        state.playerStats.blue.speedBoostMoves--;
       }
     }
 
-    state.posBlue.x = newX;
-    state.posBlue.y = newY;
-    playerBlue.style.left = newX + 'px';
-    playerBlue.style.top = newY + 'px';
-    
-    if (state.playerStats.blue.speedBoostMoves > 0) {
-      state.playerStats.blue.speedBoostMoves--;
-    }
-    
-    checkBonusCollision('Blue');
-  }
 
 
 }
