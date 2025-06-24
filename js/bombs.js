@@ -49,6 +49,16 @@ export function explodeBomb(bombElement) {
   const bombX = parseInt(bombElement.style.left);
   const bombY = parseInt(bombElement.style.top);
 
+    // Ajouter la classe shake
+  const playground = document.getElementById('playground');
+  playground.classList.add('playground-shake');
+
+  // Retirer la classe après l'animation
+  setTimeout(() => {
+    playground.classList.remove('playground-shake');
+  }, 800);
+
+
   
   let explosionCells = [];
   const hasBlastRadius = bombElement.dataset.hasBlastRadius === 'true';
