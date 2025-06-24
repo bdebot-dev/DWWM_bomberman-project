@@ -88,3 +88,28 @@
   50% { transform: scale(1.2); }
   100% { transform: scale(1); }
 }
+
+/* Ghost bonus */
+.bonus.ghost {
+  background: white;
+  border-radius: 50%;
+  border: 1px dashed #aaa;
+  animation: ghost-pulse 1.5s infinite;
+}
+
+@keyframes ghost-pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0.8; }
+}
+
+.ghost-mode {
+  opacity: 0.7;
+  animation: ghost-effect 1s infinite;
+}
+
+@keyframes ghost-effect {
+  0% { opacity: 0.7; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0.7; }
+}

@@ -70,6 +70,12 @@ function restartGame() {
   playerBlue.style.left = state.posBlue.x + 'px';
   playerBlue.style.top = state.posBlue.y + 'px';
 
+  // Ghost Bonus
+  state.playerStats.red.ghostMode = false;
+  state.playerStats.blue.ghostMode = false;
+  playerRed.classList.remove('ghost-mode');
+  playerBlue.classList.remove('ghost-mode');
+
   // Remove any remaining bombs
   if (state.bombRed) { state.bombRed.remove(); state.bombRed = null; }
   if (state.bombBlue) { state.bombBlue.remove(); state.bombBlue = null; }

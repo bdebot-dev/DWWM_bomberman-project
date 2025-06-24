@@ -116,19 +116,14 @@ export function explodeBomb(bombElement) {
             bonus.className = 'bonus';
 
             // Répartition des types de bonus (25% chacun)
-            const rand = Math.random();
-            let bonusType;
-            if (rand < 0.2) {
-              bonusType = 'deadly';
-            } else if (rand < 0.4) {
-              bonusType = 'multi-bomb';
-            } else if (rand < 0.6) {
-              bonusType = 'invincibility';
-            } else if (rand < 0.8) {
-              bonusType = 'blast-radius';
-            } else {
-              bonusType = 'speed-boost';
-            }
+              const rand = Math.random();
+              let bonusType;
+              if (rand < 0.2) bonusType = 'deadly';
+              else if (rand < 0.4) bonusType = 'multi-bomb';
+              else if (rand < 0.6) bonusType = 'invincibility';
+              else if (rand < 0.8) bonusType = 'blast-radius';
+              else if (rand < 0.9) bonusType = 'speed-boost';
+              else bonusType = 'ghost';
 
             bonus.classList.add(bonusType);
             bonus.dataset.type = bonusType;

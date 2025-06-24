@@ -62,12 +62,15 @@ export function handlePlayerMove(event) {
       const nextX = newX + stepX;
       const nextY = newY + stepY;
       
+      
       if (
         nextX >= 0 && nextX <= getMaxX() &&
         nextY >= 0 && nextY <= getMaxY() &&
         !(nextX === state.posBlue.x && nextY === state.posBlue.y) &&
-        !isBombAt(nextX, nextY) &&
-        !isObstacleAt(nextX, nextY)
+        (
+          state.playerStats.red.ghostMode ||
+          (!isBombAt(nextX, nextY) && !isObstacleAt(nextX, nextY))
+        )
       ) {
         // Mise à jour intermédiaire de la position
         const prevX = newX;
@@ -75,6 +78,8 @@ export function handlePlayerMove(event) {
         newX = nextX;
         newY = nextY;
 
+
+        
         // Mettre à jour temporairement la position dans le state
         state.posRed.x = newX;
         state.posRed.y = newY;
@@ -138,8 +143,10 @@ export function handlePlayerMove(event) {
           nextX >= 0 && nextX <= getMaxX() &&
           nextY >= 0 && nextY <= getMaxY() &&
           !(nextX === state.posRed.x && nextY === state.posRed.y) &&
-          !isBombAt(nextX, nextY) &&
-          !isObstacleAt(nextX, nextY)
+          (
+            state.playerStats.blue.ghostMode ||
+            (!isBombAt(nextX, nextY) && !isObstacleAt(nextX, nextY))
+          )
         ) {
           currentX = nextX;
           currentY = nextY;

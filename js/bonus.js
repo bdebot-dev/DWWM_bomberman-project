@@ -81,4 +81,35 @@ export function checkBonusCollision(player) {
       state.bonuses.splice(i, 1);
     }
   }
+
+  if (bonus.element.dataset.type === 'ghost') {
+    state.playerStats[playerKey].ghostMode = true;
+    const playerElem = player === 'Red' ? playerRed : playerBlue;
+    playerElem.classList.add('ghost-mode');
+    
+    setTimeout(() => {
+      state.playerStats[playerKey].ghostMode = false;
+      playerElem.classList.remove('ghost-mode');
+      
+      // Vérifier la position après la fin du mode fantôme
+      const x = state[`pos${player}`].x;
+      const y = state[`pos${player}`].y;
+      
+      if (isObstacleAt(x, y)) {
+        // Trouver la case libre la plus proche
+        const safePos = findNearestSafePosition(x, y);
+        if (safePos) {
+          state[`pos${player}`] = safePos;
+          playerElem.style.left = safePos.x + 'px';
+          playerElem.style.top = safePos.y + 'px';
+        } else {
+          // Si aucune case libre, tuer le joueur
+          handlePlayerDeath(player);
+        }
+      }
+    }, 10000); // 10 secondes
+  }
+
+
+
 }
